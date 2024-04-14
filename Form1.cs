@@ -7,8 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-
+using System.Data.SqlClient;
 namespace WindowsFormsApp1
 {
     public partial class Login : Form
@@ -40,10 +39,12 @@ namespace WindowsFormsApp1
 
         private void Login_MouseClick(object sender, MouseEventArgs e)
         {
+            Console.WriteLine(760 / 4);
             if (textBox1.TextLength != 0 && textBox2.TextLength != 0)
             {
-                string str = "Server=localhost;Database=session1;Uid=root;Pwd=k23092003;";
-                MySqlConnection connection = new MySqlConnection(str);
+                string str = "Data Source=WIN-0B908PJ6FUC;Initial Catalog=Session1;Integrated Security=True";
+
+                SqlConnection connection = new SqlConnection(str);
                 try
                 {
 
@@ -51,19 +52,23 @@ namespace WindowsFormsApp1
                     connection.Open();
                     string query = "SELECT * FROM employees WHERE UserName = @UserName AND Password = @Password";
 
-                    MySqlCommand command = new MySqlCommand(query, connection);
+                    SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@UserName", textBox1.Text);
                     command.Parameters.AddWithValue("@Password", textBox2.Text);
-                    using (MySqlDataReader reader = command.ExecuteReader())
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
                         if (reader.HasRows)
                         {
                             while (reader.Read())
                             {
-                                if (reader.GetInt32("isAdmin") == 1)
+                                if (reader["isAdmin"].ToString() == "1");
                                 {
+                                    Hide();
+                                    Form2 f = new Form2();
+                                    f.Show();
 
                                 }
+                              
                             }
                         } else
                         {
