@@ -41,9 +41,8 @@ namespace WindowsFormsApp1
         {
             if (textBox1.TextLength != 0 && textBox2.TextLength != 0)
             {
-                string str = "Data Source=DESKTOP-400BU96\\SQLEXPRESS;Initial Catalog=Session1;Integrated Security=True";
 
-                SqlConnection connection = new SqlConnection(str);
+                SqlConnection connection = new SqlConnection(Program.connectionString);
                 try
                 {
 

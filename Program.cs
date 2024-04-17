@@ -5,13 +5,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace WindowsFormsApp1
 {
+    /*
+    @Author WhyY0u CHECK NAME GITHUB
+    The code is not for commercial use
+    */
     static class Program
     {
-        /// <summary>
-        /// Главная точка входа для приложения.
-        /// </summary>
-        /// 
-        
+
+        //public const string connectionString = "Data Source=DESKTOP-400BU96\\SQLEXPRESS;Initial Catalog=Session1;Integrated Security=True";
+        public const string connectionString = "Data Source=WIN-0B908PJ6FUC;Initial Catalog=Session1;Integrated Security=True";
+
+
         [STAThread]
         static void Main()
         {

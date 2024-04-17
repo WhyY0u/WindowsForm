@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,14 +14,17 @@ namespace WindowsFormsApp1
     public partial class Form3 : Form
     {
         string assetsSN, assetName, departament;
-        
-        public Form3(string assetsSN, string assetName, string departament)
+        int assetID;
+
+
+        public Form3(string assetsSN, string assetName, string departament, int assetID)
         {
             InitializeComponent();
             InitComboBox();
             label7.Text = assetsSN;
             label8.Text = assetName;
             label10.Text = departament;
+            this.assetID = assetID;
 
         }
 
@@ -44,6 +48,7 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             if (comboBox1.SelectedIndex == -1)
             {
                 label14.Visible = true;
@@ -61,10 +66,45 @@ namespace WindowsFormsApp1
                 label12.Visible = true;
                 return;
             }
-            Close();
-            Form2 form2 = new Form2();
-            form2.Show();
-            
+
+
+            SqlConnection sqlConnection = new SqlConnection(Program.connectionString);
+            try
+            {
+                sqlConnection.Open();
+                string commandstr = "INSERT INTO Priorities (Name) OUTPUT INSERTED.ID VALUES (@Name)";
+                int pId = -1;
+
+                using (SqlCommand command = new SqlCommand(commandstr, sqlConnection))
+                {
+
+                    command.Parameters.AddWithValue("@Name", comboBox1.SelectedItem.ToString());
+                    pId = (int)command.ExecuteScalar();
+                }
+
+                string commandsstr = "INSERT INTO EmergencyMaintenances (AssetID, PriorityID, DescriptionEmergency, OtherConsiderations, EMReportDate) VALUES (@AssetID ,@PriorityID, @DescriptionEmergency, @OtherConsiderations, @EMReportDate)";
+                using (SqlCommand command = new SqlCommand(commandsstr, sqlConnection))
+                {
+
+                    command.Parameters.AddWithValue("@AssetID", assetID);
+                    command.Parameters.AddWithValue("@PriorityID", pId);
+                    command.Parameters.AddWithValue("@DescriptionEmergency", textBox1.Text);
+                    command.Parameters.AddWithValue("@OtherConsiderations", textBox2.Text);
+                    command.Parameters.AddWithValue("@EMReportDate", DateTime.Now.ToString("yyyy-MM-dd"));
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                }
+
+                Close();
+                    Form2 form2 = new Form2();
+                    form2.Show();
+                
+
+            } catch (Exception ex)
+            {
+                sqlConnection.Close();
+            }
+           
 
 
         }

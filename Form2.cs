@@ -16,6 +16,8 @@ namespace WindowsFormsApp1
     {
 
         string SelectedAssetSN, SelectedAssetName;
+        int SelectedAssetID;
+        string LastClosedEMs;
         public Form2()
         {
             InitializeComponent();
@@ -23,6 +25,8 @@ namespace WindowsFormsApp1
             if (dataGridView1.Rows[0] != null)
             {
                 dataGridView1.Rows[0].Selected = true;
+                SelectedAssetSN = dataGridView1.Rows[0].Cells[0].Value.ToString();
+                SelectedAssetName = dataGridView1.Rows[0].Cells[1].Value.ToString();
             }
         }
 
@@ -34,14 +38,29 @@ namespace WindowsFormsApp1
 
         private void FillData()
         {
-            string connectionString = "Data Source=DESKTOP-400BU96\\SQLEXPRESS;Initial Catalog=Session1;Integrated Security=True";
             
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Program.connectionString))
             {
                 try
                 {
                     connection.Open();
-                    string commandText = "SELECT A.AssetSN,A.AssetName, CONVERT(VARCHAR(10), MAX(EM.EMEndDate), 104) AS LastEMDate, COUNT(EM.ID) AS NumberofEMs FROM Assets A LEFT JOIN EmergencyMaintenances EM ON A.ID = EM.AssetID GROUP BY A.AssetSN, A.AssetName";
+                    string commandText = @"
+    SELECT 
+        A.AssetSN,
+        A.AssetName, 
+        CASE 
+            WHEN COUNT(EM.ID) = COUNT(EM.EMEndDate) THEN CONVERT(VARCHAR(10), MAX(EM.EMEndDate)) 
+            ELSE NULL 
+        END AS LastEMDate, 
+        COUNT(EM.ID) AS NumberofEMs 
+    FROM 
+        Assets A 
+    LEFT JOIN 
+        EmergencyMaintenances EM ON A.ID = EM.AssetID 
+    GROUP BY 
+        A.AssetSN, 
+        A.AssetName
+";
                     SqlCommand sqlCommand = new SqlCommand(commandText, connection);
 
                     using (SqlDataReader reader = sqlCommand.ExecuteReader())
@@ -52,7 +71,8 @@ namespace WindowsFormsApp1
                             while (reader.Read())
                             {
                                
-                                dataGridView1.Rows.Add(reader["AssetSN"], reader["AssetName"], reader["LastEMDate"].ToString().Length <= 0 ?  "-" : reader["LastEMDate"], reader["NumberofEMs"]);
+                                dataGridView1.Rows.Add(reader["AssetSN"], reader["AssetName"], reader["LastEMDate"].ToString().Length <= 0 || reader["LastEMDate"].ToString().Equals("1900-01-01") ?  "-" : reader["LastEMDate"], reader["NumberofEMs"]);
+                                Console.WriteLine(reader["LastEMDate"].ToString().Length);
                             }
                         }
                     }
@@ -72,9 +92,10 @@ namespace WindowsFormsApp1
                
                 if(row.Cells[index].Value != null)
                 {
-                    bool check = row.Cells[index].Value.ToString().Contains("-");
+                    bool check = row.Cells[index].Value.ToString().Equals("-");
                     if (check)  {
-                        
+                        Console.WriteLine(check);
+
                         row.Cells[index].Style.BackColor = Color.Red;
                         row.Cells[0].Style.BackColor = Color.Red;
                         row.Cells[1].Style.BackColor = Color.Red;
@@ -121,56 +142,66 @@ namespace WindowsFormsApp1
         {
             if(e.RowIndex >= 0)
             {
-                
                 dataGridView1.Rows[e.RowIndex].Selected = true;
                 SelectedAssetSN = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
                 SelectedAssetName = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
+                LastClosedEMs = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string connectionString = "Data Source=DESKTOP-400BU96\\SQLEXPRESS;Initial Catalog=Session1;Integrated Security=True";
-            string departamentName = null;
-            SqlConnection connection = new SqlConnection(connectionString);
-            try
+            if (LastClosedEMs != null && LastClosedEMs != "-")
             {
-                connection.Open();
-                string command = "SELECT * FROM Assets WHERE AssetSN = @AssetSN AND AssetName = @AssetName";
-                SqlCommand sqlCommand = new SqlCommand(command, connection);
-                sqlCommand.Parameters.AddWithValue("@AssetSN", SelectedAssetSN);
-                sqlCommand.Parameters.AddWithValue("@AssetName", SelectedAssetName);
-                int DepartamentID = -1;
-                using (SqlDataReader data = sqlCommand.ExecuteReader())
+                string departamentName = null;
+                SqlConnection connection = new SqlConnection(Program.connectionString);
+                try
                 {
-                    if (data.HasRows)
+                    connection.Open();
+                    string command = "SELECT * FROM Assets WHERE AssetSN = @AssetSN AND AssetName = @AssetName";
+                    SqlCommand sqlCommand = new SqlCommand(command, connection);
+                    sqlCommand.Parameters.AddWithValue("@AssetSN", SelectedAssetSN);
+                    sqlCommand.Parameters.AddWithValue("@AssetName", SelectedAssetName);
+                    int DepartamentID = -1;
+                    using (SqlDataReader data = sqlCommand.ExecuteReader())
                     {
-
-                        while (data.Read())
+                        if (data.HasRows)
                         {
-                            DepartamentID = (int)data["DepartmentLocationID"];
 
+                            while (data.Read())
+                            {
+                                DepartamentID = (int)data["DepartmentLocationID"];
+
+                            }
+                        }
+                    }
+
+                    string command2 = "SELECT d.Name, a.id FROM Departments d JOIN DepartmentLocations dl ON d.id = dl.DepartmentID JOIN Assets a ON dl.id = a.DepartmentLocationID WHERE a.id = " + DepartamentID;
+                    SqlCommand sqlCommand2 = new SqlCommand(command2, connection);
+
+                    using (SqlDataReader reader = sqlCommand2.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                departamentName = reader["Name"].ToString();
+                                SelectedAssetID = (int)reader["ID"];
+
+
+                            }
                         }
                     }
                 }
-                string command2 = "SELECT d.Name FROM Department d JOIN DepartmentLocation dl ON d.id = dl.Department JOIN Assets a ON dl.id = a.DepartmentLocation WHERE a.DepartmentLocationID = " + DepartamentID;
-                using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                catch (Exception ex)
                 {
-                    if(reader.HasRows)
-                    {
-                        while(reader.Read())
-                        {
-                            departamentName = reader["Name"].ToString();
-                        }
-                    }
+                    connection.Close();
                 }
+
+                Close();
+                Form3 from3 = new Form3(SelectedAssetSN, SelectedAssetName, departamentName, SelectedAssetID);
+                from3.Show();
             }
-            catch (Exception ex)  {
-                connection.Close();
-            } 
-            Close();
-            Form3 from3 = new Form3(SelectedAssetSN, SelectedAssetName, departamentName);
-            from3.Show();
         }
     }
 }
