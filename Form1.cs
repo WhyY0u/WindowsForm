@@ -39,10 +39,9 @@ namespace WindowsFormsApp1
 
         private void Login_MouseClick(object sender, MouseEventArgs e)
         {
-            Console.WriteLine(760 / 4);
             if (textBox1.TextLength != 0 && textBox2.TextLength != 0)
             {
-                string str = "Data Source=WIN-0B908PJ6FUC;Initial Catalog=Session1;Integrated Security=True";
+                string str = "Data Source=DESKTOP-400BU96\\SQLEXPRESS;Initial Catalog=Session1;Integrated Security=True";
 
                 SqlConnection connection = new SqlConnection(str);
                 try
@@ -84,6 +83,9 @@ namespace WindowsFormsApp1
                 {
                     connection.Close();
                 }
+            } else
+            {
+                label5.Visible = true;
             }
 
         }
@@ -97,6 +99,22 @@ namespace WindowsFormsApp1
         private void textBox2_MouseClick(object sender, MouseEventArgs e)
         {
             if(label4.Visible) label4.Visible = false;
+        }
+
+        private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+            if(textBox1.TextLength > 0 && textBox2.TextLength > 0)
+            {
+                label5.Visible = false;
+            }
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox2.TextLength > 0 && textBox1.TextLength > 0)
+            {
+                label5.Visible = false;
+            }
         }
     }
 }
