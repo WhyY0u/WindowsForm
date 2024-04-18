@@ -31,22 +31,22 @@ namespace WindowsFormsApp1
         {
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
             this.AssetSN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AssetName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RequestDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AccountableParty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Departament = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.label1.Location = new System.Drawing.Point(11, 25);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(200, 19);
+            this.label1.Size = new System.Drawing.Size(184, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "List of Assets Requesting EM:";
             // 
@@ -61,19 +61,10 @@ namespace WindowsFormsApp1
             this.Departament});
             this.dataGridView1.Location = new System.Drawing.Point(15, 56);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(910, 415);
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.Size = new System.Drawing.Size(913, 415);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(15, 493);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(196, 34);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Manage Request";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // AssetSN
             // 
@@ -109,6 +100,16 @@ namespace WindowsFormsApp1
             this.Departament.Name = "Departament";
             this.Departament.ReadOnly = true;
             this.Departament.Width = 182;
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.button1.Location = new System.Drawing.Point(15, 493);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(196, 34);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Manage Request";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // Form4
             // 

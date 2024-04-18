@@ -12,31 +12,7 @@ using System.Windows.Forms;
 namespace WindowsFormsApp1
 {
 
-    public class Assets
-    {
-        public bool Work;
-        public string AssetSSN;
-
-        public string AssetName;
-        public string LastClosedEM;
-
-        public int NumberOfEMS;
-
-
-
-
-        public Assets(bool Work, string AssetSSN, string AssetName, string LastClosedEM, int NumberOfEMS)
-        {
-            this.Work = Work;
-            this.AssetSSN = AssetSSN;
-            this.AssetName = AssetName;
-            this.LastClosedEM = LastClosedEM;
-            this.NumberOfEMS = NumberOfEMS;
-        }
-
-        
- 
-    }
+   
 
     public partial class Form2 : Form
     {
@@ -236,5 +212,30 @@ namespace WindowsFormsApp1
                 from3.Show();
             }
         }
+    }
+    public class Assets
+    {
+        public bool Work;
+        public string AssetSSN;
+
+        public string AssetName;
+        public string LastClosedEM;
+
+        public int NumberOfEMS;
+
+
+
+
+        public Assets(bool Work, string AssetSSN, string AssetName, string LastClosedEM, int NumberOfEMS)
+        {
+            this.Work = Work;
+            this.AssetSSN = AssetSSN;
+            this.AssetName = AssetName;
+            this.LastClosedEM = LastClosedEM;
+            this.NumberOfEMS = NumberOfEMS;
+        }
+
+
+
     }
 }

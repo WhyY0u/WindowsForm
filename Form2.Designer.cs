@@ -33,11 +33,11 @@ namespace WindowsFormsApp1
             this.label1 = new System.Windows.Forms.Label();
             this.tableUpdateStatementBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
             this.AssetSN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AssetName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LastClosedEM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NumberofEMs = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tableUpdateStatementBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -75,30 +75,6 @@ namespace WindowsFormsApp1
             this.dataGridView1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dataGridView1_KeyPress);
             this.dataGridView1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseClick);
             // 
-            // AssetSN
-            // 
-            this.AssetSN.HeaderText = "Asset SN";
-            this.AssetSN.Name = "AssetSN";
-            this.AssetSN.Width = 189;
-            // 
-            // AssetName
-            // 
-            this.AssetName.HeaderText = "Asset Name";
-            this.AssetName.Name = "AssetName";
-            this.AssetName.Width = 189;
-            // 
-            // LastClosedEM
-            // 
-            this.LastClosedEM.HeaderText = "Last Closed EM";
-            this.LastClosedEM.Name = "LastClosedEM";
-            this.LastClosedEM.Width = 189;
-            // 
-            // NumberofEMs
-            // 
-            this.NumberofEMs.HeaderText = "Number of EMs";
-            this.NumberofEMs.Name = "NumberofEMs";
-            this.NumberofEMs.Width = 189;
-            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(20, 399);
@@ -108,6 +84,34 @@ namespace WindowsFormsApp1
             this.button1.Text = "Send Emergency Maintenance Request";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // AssetSN
+            // 
+            this.AssetSN.HeaderText = "Asset SN";
+            this.AssetSN.Name = "AssetSN";
+            this.AssetSN.ReadOnly = true;
+            this.AssetSN.Width = 189;
+            // 
+            // AssetName
+            // 
+            this.AssetName.HeaderText = "Asset Name";
+            this.AssetName.Name = "AssetName";
+            this.AssetName.ReadOnly = true;
+            this.AssetName.Width = 189;
+            // 
+            // LastClosedEM
+            // 
+            this.LastClosedEM.HeaderText = "Last Closed EM";
+            this.LastClosedEM.Name = "LastClosedEM";
+            this.LastClosedEM.ReadOnly = true;
+            this.LastClosedEM.Width = 189;
+            // 
+            // NumberofEMs
+            // 
+            this.NumberofEMs.HeaderText = "Number of EMs";
+            this.NumberofEMs.Name = "NumberofEMs";
+            this.NumberofEMs.ReadOnly = true;
+            this.NumberofEMs.Width = 189;
             // 
             // Form2
             // 
@@ -133,10 +137,10 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.BindingSource tableUpdateStatementBindingSource;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewTextBoxColumn AssetSN;
         private System.Windows.Forms.DataGridViewTextBoxColumn AssetName;
         private System.Windows.Forms.DataGridViewTextBoxColumn LastClosedEM;
         private System.Windows.Forms.DataGridViewTextBoxColumn NumberofEMs;
-        private System.Windows.Forms.Button button1;
     }
 }
