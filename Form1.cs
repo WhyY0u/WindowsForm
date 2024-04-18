@@ -59,12 +59,17 @@ namespace WindowsFormsApp1
                         {
                             while (reader.Read())
                             {
-                                if (reader["isAdmin"].ToString() == "1");
+                                if (reader["isAdmin"].ToString() == "1")
                                 {
                                     Hide();
                                     Form2 f = new Form2();
                                     f.Show();
 
+                                } else
+                                {
+                                    Hide();
+                                    Form4 f = new Form4();
+                                    f.Show();
                                 }
                               
                             }

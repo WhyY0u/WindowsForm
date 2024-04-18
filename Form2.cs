@@ -12,12 +12,43 @@ using System.Windows.Forms;
 namespace WindowsFormsApp1
 {
 
+    public class Assets
+    {
+        public bool Work;
+        public string AssetSSN;
+
+        public string AssetName;
+        public string LastClosedEM;
+
+        public int NumberOfEMS;
+
+
+
+
+        public Assets(bool Work, string AssetSSN, string AssetName, string LastClosedEM, int NumberOfEMS)
+        {
+            this.Work = Work;
+            this.AssetSSN = AssetSSN;
+            this.AssetName = AssetName;
+            this.LastClosedEM = LastClosedEM;
+            this.NumberOfEMS = NumberOfEMS;
+        }
+
+        
+ 
+    }
+
     public partial class Form2 : Form
     {
 
         string SelectedAssetSN, SelectedAssetName;
         int SelectedAssetID;
-        string LastClosedEMs;
+        string SelectedLastClosedEMs;
+        bool SelectWork;
+
+        public List<Assets> assets = new List<Assets>();
+
+
         public Form2()
         {
             InitializeComponent();
@@ -48,10 +79,8 @@ namespace WindowsFormsApp1
     SELECT 
         A.AssetSN,
         A.AssetName, 
-        CASE 
-            WHEN COUNT(EM.ID) = COUNT(EM.EMEndDate) THEN CONVERT(VARCHAR(10), MAX(EM.EMEndDate)) 
-            ELSE NULL 
-        END AS LastEMDate, 
+        MAX(CASE WHEN EM.EMEndDate IS NULL THEN 1 ELSE 0 END) AS isWork,
+        CONVERT(VARCHAR(10), MAX(EM.EMEndDate)) AS LastEMDate, 
         COUNT(EM.ID) AS NumberofEMs 
     FROM 
         Assets A 
@@ -61,18 +90,22 @@ namespace WindowsFormsApp1
         A.AssetSN, 
         A.AssetName
 ";
-                    SqlCommand sqlCommand = new SqlCommand(commandText, connection);
 
+                    SqlCommand sqlCommand = new SqlCommand(commandText, connection);
+                    /*
+                     если там есть NULL мы сохраняем как NULL так и LastEMDate что позволит нам узнать если машина на ремеонте при этом также оставим последнию сохраненую дату чтобы если понадобится 
+                     то у нас она будет 
+                     */
                     using (SqlDataReader reader = sqlCommand.ExecuteReader())
                     {
                         if (reader.HasRows)
                         {
-                            Console.WriteLine("OK");
+                           
                             while (reader.Read())
                             {
                                
-                                dataGridView1.Rows.Add(reader["AssetSN"], reader["AssetName"], reader["LastEMDate"].ToString().Length <= 0 || reader["LastEMDate"].ToString().Equals("1900-01-01") ?  "-" : reader["LastEMDate"], reader["NumberofEMs"]);
-                                Console.WriteLine(reader["LastEMDate"].ToString().Length);
+                                assets.Add(new Assets((int)reader["isWork"] == 1 ? true : false, (string)reader["AssetSN"], (string)reader["AssetName"], (reader["LastEMDate"].ToString().Length <= 0  ? "-" : (string)reader["LastEMDate"]), (int)reader["NumberofEMs"]));
+                                Console.WriteLine((int)reader["isWork"] == 1 );
                             }
                         }
                     }
@@ -86,25 +119,24 @@ namespace WindowsFormsApp1
 
             int index = dataGridView1.Columns["LastClosedEM"].Index;
 
-
-           foreach(DataGridViewRow row in dataGridView1.Rows)
+            int count = -1;
+            foreach (Assets ass in assets)
             {
-               
-                if(row.Cells[index].Value != null)
+                dataGridView1.Rows.Add(ass.AssetSSN, ass.AssetName, ass.LastClosedEM, ass.NumberOfEMS);
+                count++;
+                DataGridViewRow row = dataGridView1.Rows[count];
+                bool check = row.Cells[index].Value.ToString().Equals("-");
+                if (check || ass.Work)
                 {
-                    bool check = row.Cells[index].Value.ToString().Equals("-");
-                    if (check)  {
-                        Console.WriteLine(check);
-
-                        row.Cells[index].Style.BackColor = Color.Red;
-                        row.Cells[0].Style.BackColor = Color.Red;
-                        row.Cells[1].Style.BackColor = Color.Red;
-                        row.Cells[3].Style.BackColor = Color.Red;
-
-
-                    }
+                    row.Cells[index].Style.BackColor = Color.Red;
+                    row.Cells[0].Style.BackColor = Color.Red;
+                    row.Cells[1].Style.BackColor = Color.Red;
+                    row.Cells[3].Style.BackColor = Color.Red;
                 }
             }
+
+
+            
         }
 
 
@@ -145,13 +177,14 @@ namespace WindowsFormsApp1
                 dataGridView1.Rows[e.RowIndex].Selected = true;
                 SelectedAssetSN = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
                 SelectedAssetName = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
-                LastClosedEMs = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
+                SelectedLastClosedEMs = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
+                SelectWork = assets[e.RowIndex].Work;
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (LastClosedEMs != null && LastClosedEMs != "-")
+            if (SelectedLastClosedEMs != null && SelectedLastClosedEMs != "-" && !SelectWork)
             {
                 string departamentName = null;
                 SqlConnection connection = new SqlConnection(Program.connectionString);

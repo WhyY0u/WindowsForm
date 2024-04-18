@@ -13,7 +13,6 @@ namespace WindowsFormsApp1
 {
     public partial class Form3 : Form
     {
-        string assetsSN, assetName, departament;
         int assetID;
 
 
@@ -95,12 +94,12 @@ namespace WindowsFormsApp1
 
                 }
 
-                Close();
+                    Close();
                     Form2 form2 = new Form2();
                     form2.Show();
                 
 
-            } catch (Exception ex)
+            } catch (Exception )
             {
                 sqlConnection.Close();
             }
