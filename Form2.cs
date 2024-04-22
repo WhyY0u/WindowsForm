@@ -21,6 +21,7 @@ namespace WindowsFormsApp1
         int SelectedAssetID;
         string SelectedLastClosedEMs;
         bool SelectWork;
+       
 
         public List<Assets> assets = new List<Assets>();
 
@@ -35,6 +36,7 @@ namespace WindowsFormsApp1
                 SelectedAssetSN = dataGridView1.Rows[0].Cells[0].Value.ToString();
                 SelectedAssetName = dataGridView1.Rows[0].Cells[1].Value.ToString();
             }
+         
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -157,7 +159,10 @@ namespace WindowsFormsApp1
                 SelectWork = assets[e.RowIndex].Work;
             }
         }
-
+        public void global_FormClosed(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             if (SelectedLastClosedEMs != null && SelectedLastClosedEMs != "-" && !SelectWork)

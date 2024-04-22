@@ -13,7 +13,7 @@ namespace WindowsFormsApp1
 {
     public partial class Form4 : Form
     {
-        int index = -1;
+        int index = 0;
         public Form4()
         {
             InitializeComponent();
@@ -57,10 +57,14 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-           if(index != -1)
+            if (index != -1)
             {
-                
+                Form5 from = new Form5(dataGridView1.Rows[index].Cells[0].Value.ToString(), dataGridView1.Rows[index].Cells[1].Value.ToString(), dataGridView1.Rows[index].Cells[4].Value.ToString());
+                Hide();
+                from.Show();
             }
+
+
         }
 
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)

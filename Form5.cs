@@ -12,8 +12,12 @@ namespace WindowsFormsApp1
 {
     public partial class Form5 : Form
     {
-        public Form5()
+        string AssetSN, AssetName, Department;
+        public Form5(string AssetSN, string AssetName, string Department)
         {
+            this.AssetName = AssetName;
+            this.AssetSN = AssetSN;
+            this.Department = Department;
             InitializeComponent();
         }
 
@@ -32,8 +36,26 @@ namespace WindowsFormsApp1
 
         }
 
+        private void button2_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(textBox1.Text.Length != 0)
+            {
+                Hide();
+                Form4 from = new Form4();
+                from.Show();
+            }
+        }
+
         private void label13_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form4 form = new Form4();
+            Hide();
+            form.Show();
 
         }
     }

@@ -59,21 +59,26 @@ namespace WindowsFormsApp1
                         {
                             while (reader.Read())
                             {
-                                if (reader["isAdmin"].ToString() == "1")
+                                Console.WriteLine("isAdmin: " + reader["isAdmin"]);
+                                if ((bool)reader["isAdmin"] == true)
                                 {
                                     Hide();
                                     Form2 f = new Form2();
                                     f.Show();
 
-                                } else
+                                }
+                                else
                                 {
                                     Hide();
                                     Form4 f = new Form4();
                                     f.Show();
+                                   
+
                                 }
-                              
+
                             }
-                        } else
+                        }
+                        else
                         {
                             label4.Visible = true;
                         }
@@ -87,12 +92,15 @@ namespace WindowsFormsApp1
                 {
                     connection.Close();
                 }
-            } else
+            }
+            else
             {
                 label5.Visible = true;
             }
 
         }
+
+      
 
         private void textBox1_MouseClick(object sender, MouseEventArgs e)
         {
