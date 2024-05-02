@@ -209,6 +209,7 @@ namespace WindowsFormsApp1
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine(ex);
                     connection.Close();
                 }
 

@@ -12,7 +12,8 @@ CREATE TABLE Employees (
 
 CREATE TABLE Parts (
     ID INT PRIMARY KEY IDENTITY,
-    EffectiveLife VARCHAR(50)
+    EffectiveLife VARCHAR(50),
+    Name VARCHAR(50)
 );
 
 CREATE TABLE Priorities (

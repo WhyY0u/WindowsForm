@@ -14,6 +14,7 @@ namespace WindowsFormsApp1
     public partial class Form4 : Form
     {
         int index = 0;
+        List<int> id = new List<int>();
         public Form4()
         {
             InitializeComponent();
@@ -29,21 +30,26 @@ namespace WindowsFormsApp1
 
         }
 
-        private void initTable() {
+        private void initTable()
+        {
             SqlConnection connection = new SqlConnection(Program.connectionString);
+
             try
             {
                 connection.Open();
-                string cmd = "SELECT a.AssetSN, a.AssetName, d.Name, emp.FirstName, emp.LastName, CONVERT(VARCHAR(10), eme.EMReportDate) AS EMReportDate FROM Assets a JOIN EmergencyMaintenances eme ON a.id = eme.AssetID JOIN Employees emp ON a.EmployeeID = emp.id JOIN DepartmentLocations dep ON a.DepartmentLocationID = dep.id JOIN Departments d ON dep.id = d.id";
-                SqlCommand command = new SqlCommand(cmd,connection);
-                using(SqlDataReader reader = command.ExecuteReader())
+                string cmd = "SELECT a.ID, a.AssetSN, a.AssetName, d.Name, emp.FirstName, emp.LastName, CONVERT(VARCHAR(10), eme.EMReportDate) AS EMReportDate FROM Assets a JOIN EmergencyMaintenances eme ON a.id = eme.AssetID JOIN Employees emp ON a.EmployeeID = emp.id JOIN DepartmentLocations dep ON a.DepartmentLocationID = dep.id JOIN Departments d ON dep.id = d.id";
+                SqlCommand command = new SqlCommand(cmd, connection);
+
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    if(reader.HasRows)
+                    if (reader.HasRows)
                     {
-                        while(reader.Read())
+                        while (reader.Read())
                         {
+                            id.Add((int)reader["ID"]);
                             dataGridView1.Rows.Add(reader["AssetSN"], reader["AssetName"], reader["EMReportDate"].ToString().Replace('-', '/'), reader["FirstName"] + " " + reader["LastName"], reader["Name"]);
                         }
+
                     }
                 }
             }
@@ -51,7 +57,7 @@ namespace WindowsFormsApp1
             {
                 connection.Close();
             }
-          
+
 
         }
 
@@ -59,7 +65,7 @@ namespace WindowsFormsApp1
         {
             if (index != -1)
             {
-                Form5 from = new Form5(dataGridView1.Rows[index].Cells[0].Value.ToString(), dataGridView1.Rows[index].Cells[1].Value.ToString(), dataGridView1.Rows[index].Cells[4].Value.ToString());
+                Form5 from = new Form5(dataGridView1.Rows[index].Cells[0].Value.ToString(), dataGridView1.Rows[index].Cells[1].Value.ToString(), dataGridView1.Rows[index].Cells[4].Value.ToString(), id[index]);
                 Hide();
                 from.Show();
             }
@@ -69,13 +75,13 @@ namespace WindowsFormsApp1
 
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if(e.RowIndex != -1)
+            if (e.RowIndex != -1)
             {
-                    dataGridView1.Rows[e.RowIndex].Selected = true;
-                    index = e.RowIndex;
-
+                dataGridView1.Rows[e.RowIndex].Selected = true;
+                index = e.RowIndex;
 
             }
         }
     }
+
 }

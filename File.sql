@@ -6,11 +6,11 @@ VALUES
     ('Mike', 'Johnson', '345-678-9012', 0, 'mike_johnson', 'password789'),
     ('KillMe', 'Badd', '345-455-123', 1, 'JustWork', 'password789');
 
-INSERT INTO Parts (EffectiveLife)
+INSERT INTO Parts (EffectiveLife, Name)
 VALUES 
-    ('YesYesLife'),
-    ('Life2'),
-    ('Life23');
+    ('2026-01-01', 'Dvigatil'),
+    ('2021-01-01', 'Kardan'),
+    ('2019-01-01', 'Kolotki');
 
 INSERT INTO Priorities (Name)
 VALUES 

@@ -12,8 +12,8 @@ namespace WindowsFormsApp1
     static class Program
     {
 
-       // public const string connectionString = "Data Source=DESKTOP-400BU96\\SQLEXPRESS;Initial Catalog=Session1;Integrated Security=True";
-        public const string connectionString = "Data Source=WIN-0B908PJ6FUC;Initial Catalog=Session1;Integrated Security=True";
+        public const string connectionString = "Data Source=DESKTOP-400BU96\\SQLEXPRESS;Initial Catalog=Session1;Integrated Security=True";
+       // public const string connectionString = "Data Source=WIN-0B908PJ6FUC;Initial Catalog=Session1;Integrated Security=True";
 
 
         [STAThread]
