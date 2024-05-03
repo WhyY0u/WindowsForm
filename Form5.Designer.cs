@@ -45,21 +45,22 @@ namespace WindowsFormsApp1
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label13 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.PartName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Action = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.PartName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Action = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -219,8 +220,8 @@ namespace WindowsFormsApp1
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.numericUpDown1);
             this.panel3.Controls.Add(this.comboBox1);
-            this.panel3.Controls.Add(this.textBox2);
             this.panel3.Controls.Add(this.dataGridView1);
             this.panel3.Controls.Add(this.button1);
             this.panel3.Controls.Add(this.label11);
@@ -229,6 +230,44 @@ namespace WindowsFormsApp1
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(817, 168);
             this.panel3.TabIndex = 13;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(89, 21);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(145, 21);
+            this.comboBox1.TabIndex = 14;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeColumns = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.PartName,
+            this.Amount,
+            this.Action});
+            this.dataGridView1.Location = new System.Drawing.Point(17, 54);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.Size = new System.Drawing.Size(783, 103);
+            this.dataGridView1.TabIndex = 12;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(607, 18);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(164, 30);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "+ Add To List";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label11
             // 
@@ -249,54 +288,6 @@ namespace WindowsFormsApp1
             this.label12.Size = new System.Drawing.Size(73, 17);
             this.label12.TabIndex = 1;
             this.label12.Text = "Part Name:";
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(607, 18);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(164, 30);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "+ Add To List";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeColumns = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.PartName,
-            this.Amount,
-            this.Action});
-            this.dataGridView1.Location = new System.Drawing.Point(17, 54);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(783, 103);
-            this.dataGridView1.TabIndex = 12;
-            // 
-            // PartName
-            // 
-            this.PartName.HeaderText = "Part Name";
-            this.PartName.Name = "PartName";
-            this.PartName.ReadOnly = true;
-            this.PartName.Width = 260;
-            // 
-            // Amount
-            // 
-            this.Amount.HeaderText = "Amount";
-            this.Amount.Name = "Amount";
-            this.Amount.ReadOnly = true;
-            this.Amount.Width = 260;
-            // 
-            // Action
-            // 
-            this.Action.HeaderText = "Action";
-            this.Action.Name = "Action";
-            this.Action.ReadOnly = true;
-            this.Action.Width = 260;
             // 
             // button2
             // 
@@ -321,20 +312,45 @@ namespace WindowsFormsApp1
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // textBox2
+            // PartName
             // 
-            this.textBox2.Location = new System.Drawing.Point(413, 21);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(111, 20);
-            this.textBox2.TabIndex = 13;
+            this.PartName.HeaderText = "Part Name";
+            this.PartName.Name = "PartName";
+            this.PartName.ReadOnly = true;
+            this.PartName.Width = 260;
             // 
-            // comboBox1
+            // Amount
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(89, 21);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(145, 21);
-            this.comboBox1.TabIndex = 14;
+            this.Amount.HeaderText = "Amount";
+            this.Amount.Name = "Amount";
+            this.Amount.ReadOnly = true;
+            this.Amount.Width = 260;
+            // 
+            // Action
+            // 
+            this.Action.HeaderText = "Action";
+            this.Action.Name = "Action";
+            this.Action.ReadOnly = true;
+            this.Action.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Action.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Action.Width = 260;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(417, 21);
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown1.TabIndex = 15;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // Form5
             // 
@@ -347,6 +363,8 @@ namespace WindowsFormsApp1
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
+            this.MaximumSize = new System.Drawing.Size(857, 595);
+            this.MinimumSize = new System.Drawing.Size(857, 595);
             this.Name = "Form5";
             this.Text = "Emergency Maintenance Request Details";
             this.panel1.ResumeLayout(false);
@@ -356,6 +374,7 @@ namespace WindowsFormsApp1
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -380,15 +399,15 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PartName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Action;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PartName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
+        private System.Windows.Forms.DataGridViewLinkColumn Action;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }
